@@ -2,8 +2,6 @@ package me.davidllorca.advancedandroid.di;
 
 import android.app.Application;
 
-import dagger.android.support.DaggerApplication;
-
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 1/02/18.
  */
