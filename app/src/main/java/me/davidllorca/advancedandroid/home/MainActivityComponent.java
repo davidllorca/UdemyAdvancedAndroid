@@ -12,7 +12,9 @@ import me.davidllorca.udemyadvancedandroid.MainActivity;
  */
 
 @ActivityScope
-@Subcomponent
+@Subcomponent(modules = {
+        MainScreenBIndingModule.class
+})
 public interface MainActivityComponent extends AndroidInjector<MainActivity> {
 
     @Subcomponent.Builder

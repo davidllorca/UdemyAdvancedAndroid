@@ -1,8 +1,10 @@
-package me.davidllorca.advancedandroid.di;
+package me.davidllorca.advancedandroid.base;
 
 import android.app.Application;
 
 import javax.inject.Inject;
+
+import me.davidllorca.advancedandroid.di.ActivityInjector;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 1/02/18.
@@ -10,7 +12,8 @@ import javax.inject.Inject;
 
 public class MyApplication extends Application {
 
-    @Inject ActivityInjector activityInjector;
+    @Inject
+    ActivityInjector activityInjector;
 
     private ApplicationComponent component;
 

@@ -11,6 +11,7 @@ import javax.inject.Provider;
 
 import dagger.android.AndroidInjector;
 import me.davidllorca.advancedandroid.BaseActivity;
+import me.davidllorca.advancedandroid.base.MyApplication;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 2/02/18.

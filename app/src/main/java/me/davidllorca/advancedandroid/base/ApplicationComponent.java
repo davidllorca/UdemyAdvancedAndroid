@@ -1,4 +1,4 @@
-package me.davidllorca.advancedandroid.di;
+package me.davidllorca.advancedandroid.base;
 
 import javax.inject.Singleton;
 
