@@ -6,20 +6,19 @@ import com.bluelinelabs.conductor.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
 import dagger.android.AndroidInjector;
-import me.davidllorca.advancedandroid.BaseActivity;
+import me.davidllorca.advancedandroid.base.BaseActivity;
 import me.davidllorca.advancedandroid.base.BaseController;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 3/02/18.
  */
 
-@ActivityScope
+@ActivityScope // If a component inject this dependency more than once, used the one it has already created. This will be retained across configuration changes, which is what we need because we want to hold
 public class ScreenInjector {
 
     private final Map<Class<? extends Controller>, Provider<AndroidInjector.Factory<? extends Controller>>> screenInjectors;
@@ -52,6 +51,7 @@ public class ScreenInjector {
         cache.remove(controller.getInstanceId());
     }
 
+    // ScreenInjector will need a Activity
     static ScreenInjector get(Activity activity) {
         if(!(activity instanceof BaseActivity)){
             throw new IllegalArgumentException("Controller must be hosted by BaseActivity");

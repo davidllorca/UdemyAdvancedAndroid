@@ -14,12 +14,16 @@ import me.davidllorca.udemyadvancedandroid.MainActivity;
  * Created by David Llorca <davidllorcabaron@gmail.com> on 2/02/18.
  */
 
-@Module(subcomponents = { MainActivityComponent.class })
+// Module composed of subcomponents
+// In case of this app which is going to be a single activity application there's only going to
+// be one subcomponent in here and one method.
+@Module(subcomponents = {MainActivityComponent.class})
 public abstract class ActivityBindingModule {
 
     @Binds
     @IntoMap
     @ActivityKey(MainActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> provideMainActivityInjector(MainActivityComponent.Builder builder);
+    abstract AndroidInjector.Factory<? extends Activity> provideMainActivityInjector
+            (MainActivityComponent.Builder builder);
 
 }

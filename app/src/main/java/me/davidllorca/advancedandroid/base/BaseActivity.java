@@ -1,4 +1,4 @@
-package me.davidllorca.advancedandroid;
+package me.davidllorca.advancedandroid.base;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -34,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Inject ScreenInjector screenInjector;
 
     private String instanceId;
-    private Router router;
+    private Router router; // Analog of FragmentManager
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
@@ -48,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         ViewGroup screenContainer = findViewById(R.id.screen_container);
         if(screenContainer == null){
-            throw new NullPointerException("Activity mus have a view with id: screen_container");
+            throw new NullPointerException("Activity must have a view with id: screen_container");
         }
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState);
         monitorBackStack();

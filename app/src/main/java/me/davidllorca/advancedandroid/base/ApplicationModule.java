@@ -9,7 +9,7 @@ import dagger.Provides;
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 1/02/18.
  */
-
+//Module is a provider of dependencies
 @Module
 public class ApplicationModule {
 
@@ -19,7 +19,9 @@ public class ApplicationModule {
         this.application = application;
     }
 
-    @Provides Context provideApplicationContext(){
+    // Any class will inject the application context. This is useful for getting things like SharedPreferences or system Services.
+    @Provides
+    Context provideApplicationContext(){
         return application;
     }
 

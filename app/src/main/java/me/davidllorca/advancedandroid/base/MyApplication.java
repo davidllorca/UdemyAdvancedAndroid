@@ -23,7 +23,7 @@ public class MyApplication extends Application {
         component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
-
+        // It has to inject itself because ActivityInjector is injected in this class.
         component.inject(this);
     }
 

@@ -1,6 +1,6 @@
 package me.davidllorca.udemyadvancedandroid
 
-import me.davidllorca.advancedandroid.BaseActivity
+import me.davidllorca.advancedandroid.base.BaseActivity
 
 class MainActivity : BaseActivity() {
 
