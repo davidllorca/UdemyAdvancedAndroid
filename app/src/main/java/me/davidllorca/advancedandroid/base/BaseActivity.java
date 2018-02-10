@@ -6,7 +6,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.bluelinelabs.conductor.Conductor;
@@ -20,6 +19,7 @@ import javax.inject.Inject;
 
 import me.davidllorca.advancedandroid.di.Injector;
 import me.davidllorca.advancedandroid.di.ScreenInjector;
+import me.davidllorca.advancedandroid.ui.ScreenNavigator;
 import me.davidllorca.udemyadvancedandroid.R;
 
 /**
@@ -32,6 +32,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static String INSTANCE_ID_KEY = "instance_id";
 
     @Inject ScreenInjector screenInjector;
+    @Inject
+    ScreenNavigator screenNavigator;
 
     private String instanceId;
     private Router router; // Analog of FragmentManager
@@ -51,6 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             throw new NullPointerException("Activity must have a view with id: screen_container");
         }
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState);
+        screenNavigator.initWithRouter(router, initialScreen());
         monitorBackStack();
         super.onCreate(savedInstanceState, persistentState);
     }
@@ -58,10 +61,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     @LayoutRes
     protected abstract int layoutRes();
 
+    // Abstract method that provides the initial controller.
+    // All subclasses will have to say what their route controller is.
+    protected abstract Controller initialScreen();
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(INSTANCE_ID_KEY, instanceId);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!screenNavigator.pop()) {
+            super.onBackPressed();
+        }
     }
 
     public String getInstanceId() {
@@ -71,6 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        screenNavigator.clear();
         if(isFinishing()){
             Injector.clearComponent(this);
         }

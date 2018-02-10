@@ -3,6 +3,7 @@ package me.davidllorca.advancedandroid.home;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 import me.davidllorca.advancedandroid.di.ActivityScope;
+import me.davidllorca.advancedandroid.ui.NavigationModule;
 import me.davidllorca.udemyadvancedandroid.MainActivity;
 
 /**
@@ -11,7 +12,9 @@ import me.davidllorca.udemyadvancedandroid.MainActivity;
 
 @ActivityScope
 @Subcomponent(modules = {
-        MainScreenBindingModule.class
+        MainScreenBindingModule.class,
+        NavigationModule.class // Says to ActivityComponent which remember is the injector for
+        // the activity that it can retrieve dependencies from a NavigationModule.
 })
 public interface MainActivityComponent extends AndroidInjector<MainActivity> {
 
