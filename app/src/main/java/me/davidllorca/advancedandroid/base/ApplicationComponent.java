@@ -3,6 +3,8 @@ package me.davidllorca.advancedandroid.base;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import me.davidllorca.advancedandroid.data.RepoServiceModule;
+import me.davidllorca.advancedandroid.netwoking.ServiceModule;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 1/02/18.
@@ -16,7 +18,9 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
-        ActivityBindingModule.class // This things will be available in our application scope.
+        ActivityBindingModule.class, // This things will be available in our application scope.
+        ServiceModule.class,
+        RepoServiceModule.class
 })
 public interface ApplicationComponent {
 
