@@ -14,23 +14,26 @@ import timber.log.Timber;
 
 public class MyApplication extends Application {
 
+    protected ApplicationComponent component;
     @Inject
     ActivityInjector activityInjector;
-
-    private ApplicationComponent component;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        component = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
+        component = initComponent();
         // It has to inject itself because ActivityInjector is injected in this class.
         component.inject(this);
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+    }
+
+    protected ApplicationComponent initComponent() {
+        return DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
     }
 
     public ActivityInjector getActivityInjector() {
