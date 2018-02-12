@@ -64,14 +64,13 @@ public class TrendingReposControllerTest {
 
         onView(withId(R.id.loading_indicator)).check(matches(withEffectiveVisibility(ViewMatchers
                 .Visibility.GONE)));
-        onView(withId(R.id.tv_error)).check(matches(withEffectiveVisibility(ViewMatchers
-                .Visibility.VISIBLE)));
+
         onView(withId(R.id.repo_list)).check(matches(withEffectiveVisibility(ViewMatchers
                 .Visibility.GONE)));
 
-        onView(allOf(withId(R.id.tv_repo_name), withText("RxJava"))).check(matches
-                (withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
+        onView(withId(R.id.tv_error)).check(matches(allOf(withText(R.string.api_error_repos),
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))));
 
+    }
 
 }
