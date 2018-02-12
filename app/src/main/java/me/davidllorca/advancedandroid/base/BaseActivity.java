@@ -1,7 +1,6 @@
 package me.davidllorca.advancedandroid.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +28,7 @@ import me.davidllorca.udemyadvancedandroid.R;
 public abstract class BaseActivity extends AppCompatActivity {
 
     // Retain component across configuration changes
-    private static String INSTANCE_ID_KEY = "instance_id";
+    private static final String INSTANCE_ID_KEY = "instance_id";
 
     @Inject ScreenInjector screenInjector;
     @Inject
@@ -39,15 +38,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Router router; // Analog of FragmentManager
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         if(savedInstanceState != null){
             instanceId = savedInstanceState.getString(INSTANCE_ID_KEY);
         } else {
             instanceId = UUID.randomUUID().toString();
         }
         Injector.inject(this);
-        setContentView(layoutRes());
 
+        setContentView(layoutRes());
         ViewGroup screenContainer = findViewById(R.id.screen_container);
         if(screenContainer == null){
             throw new NullPointerException("Activity must have a view with id: screen_container");
@@ -55,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState);
         screenNavigator.initWithRouter(router, initialScreen());
         monitorBackStack();
-        super.onCreate(savedInstanceState, persistentState);
+        super.onCreate(savedInstanceState);
     }
 
     @LayoutRes

@@ -4,7 +4,6 @@ import com.bluelinelabs.conductor.Controller;
 
 import dagger.Binds;
 import dagger.Module;
-import dagger.android.ActivityKey;
 import dagger.android.AndroidInjector;
 import dagger.multibindings.IntoMap;
 import me.davidllorca.advancedandroid.di.ControllerKey;

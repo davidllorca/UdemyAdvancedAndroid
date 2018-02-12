@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Udemy Advanced Android</string>
+    <string name="api_error_repos">Error laoding repos.</string>
 </resources>

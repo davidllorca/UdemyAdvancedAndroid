@@ -1,4 +1,4 @@
-package me.davidllorca.advancedandroid.netwoking;
+package me.davidllorca.advancedandroid.networking;
 
 import com.squareup.moshi.Moshi;
 
@@ -9,7 +9,6 @@ import dagger.Module;
 import dagger.Provides;
 import me.davidllorca.advancedandroid.model.AdapterFactory;
 import me.davidllorca.advancedandroid.model.ZonedDateTimeAdapter;
-import me.davidllorca.advancedandroid.networking.NetworkModule;
 import okhttp3.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

@@ -18,7 +18,8 @@ public abstract class NetworkModule {
     @Provides
     @Singleton
     static Call.Factory provideOkHttp() {
-        return new OkHttpClient.Builder().build();
+        return new OkHttpClient.Builder()
+                .build();
     }
 
     @Provides

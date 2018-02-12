@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import me.davidllorca.advancedandroid.data.RepoServiceModule;
-import me.davidllorca.advancedandroid.netwoking.ServiceModule;
+import me.davidllorca.advancedandroid.networking.ServiceModule;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 1/02/18.
@@ -15,10 +15,11 @@ import me.davidllorca.advancedandroid.netwoking.ServiceModule;
 
 // Lifecycle will be the lifecycle of the app. Because of the we use Singleton annotation.
     // We have to say which module we are going to use.
+// ActivityBindingModule.class -> This things will be available in our application scope.
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
-        ActivityBindingModule.class, // This things will be available in our application scope.
+        ActivityBindingModule.class,
         ServiceModule.class,
         RepoServiceModule.class
 })

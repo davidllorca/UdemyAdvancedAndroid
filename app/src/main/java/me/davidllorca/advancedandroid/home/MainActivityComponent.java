@@ -4,7 +4,7 @@ import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 import me.davidllorca.advancedandroid.di.ActivityScope;
 import me.davidllorca.advancedandroid.ui.NavigationModule;
-import me.davidllorca.udemyadvancedandroid.MainActivity;
+
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 2/02/18.
@@ -23,7 +23,7 @@ public interface MainActivityComponent extends AndroidInjector<MainActivity> {
 
         @Override
         public void seedInstance(MainActivity instance) {
-            // Overrriding we avoid inject Activity anywhere
+            // Overriding we avoid inject Activity anywhere
         }
     }
 }

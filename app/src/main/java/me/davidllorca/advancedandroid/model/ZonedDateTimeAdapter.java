@@ -10,7 +10,7 @@ import org.threeten.bp.ZonedDateTime;
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 10/02/18.
  */
-// Moshi don't convet this type because is not a primitive type.
+// Moshi don't convert this type because is not a primitive type.
 public class ZonedDateTimeAdapter {
 
     @FromJson
