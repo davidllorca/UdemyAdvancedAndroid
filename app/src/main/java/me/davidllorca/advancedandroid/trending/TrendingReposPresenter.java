@@ -11,7 +11,7 @@ import me.davidllorca.advancedandroid.model.Repo;
  */
 
 @ScreenScope
-public class TrendingReposPresenter implements RepoAdapter.RepoClickedListener {
+class TrendingReposPresenter implements RepoAdapter.RepoClickedListener {
 
     private final TrendingReposViewModel viewModel;
     private final RepoRequester repoRequester;
