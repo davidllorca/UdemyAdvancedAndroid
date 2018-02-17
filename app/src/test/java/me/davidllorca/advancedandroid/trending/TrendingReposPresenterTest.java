@@ -12,7 +12,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
-import me.davidllorca.advancedandroid.data.RepoRequester;
+import me.davidllorca.advancedandroid.data.RepoRepository;
 import me.davidllorca.advancedandroid.data.TrendingReposResponse;
 import me.davidllorca.advancedandroid.model.Repo;
 import me.davidllorca.advancedandroid.testutils.TestUtils;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class TrendingReposPresenterTest {
 
     @Mock
-    RepoRequester repoRequester;
+    RepoRepository repoRepository;
     @Mock
     TrendingReposViewModel viewModel;
     @Mock
@@ -53,7 +53,7 @@ public class TrendingReposPresenterTest {
         List<Repo> repos = setUpSuccess();
         initializePresenter();
 
-        verify(repoRequester).getTrendingRepos();
+        verify(repoRepository).getTrendingRepos();
         verify(onSuccessConsumer).accept(repos);
         verifyZeroInteractions(onErrorConsumer);
     }
@@ -93,20 +93,20 @@ public class TrendingReposPresenterTest {
                 TrendingReposResponse.class);
         List<Repo> repos = response.repos();
 
-        when(repoRequester.getTrendingRepos()).thenReturn(Single.just(repos));
+        when(repoRepository.getTrendingRepos()).thenReturn(Single.just(repos));
 
         return repos;
     }
 
     private Throwable setUpError() {
         Throwable error = new IOException();
-        when(repoRequester.getTrendingRepos()).thenReturn(Single.error(error));
+        when(repoRepository.getTrendingRepos()).thenReturn(Single.error(error));
 
         return error;
     }
 
     private void initializePresenter() {
-        presenter = new TrendingReposPresenter(viewModel, repoRequester);
+        presenter = new TrendingReposPresenter(viewModel, repoRepository);
     }
 
 }

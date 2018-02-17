@@ -2,7 +2,7 @@ package me.davidllorca.advancedandroid.trending;
 
 import javax.inject.Inject;
 
-import me.davidllorca.advancedandroid.data.RepoRequester;
+import me.davidllorca.advancedandroid.data.RepoRepository;
 import me.davidllorca.advancedandroid.di.ScreenScope;
 import me.davidllorca.advancedandroid.model.Repo;
 
@@ -14,17 +14,17 @@ import me.davidllorca.advancedandroid.model.Repo;
 class TrendingReposPresenter implements RepoAdapter.RepoClickedListener {
 
     private final TrendingReposViewModel viewModel;
-    private final RepoRequester repoRequester;
+    private final RepoRepository repoRepository;
 
     @Inject
-    public TrendingReposPresenter(TrendingReposViewModel viewModel, RepoRequester repoRequester) {
+    public TrendingReposPresenter(TrendingReposViewModel viewModel, RepoRepository repoRepository) {
         this.viewModel = viewModel;
-        this.repoRequester = repoRequester;
+        this.repoRepository = repoRepository;
         loadRepos();
     }
 
     private void loadRepos() {
-        repoRequester.getTrendingRepos()
+        repoRepository.getTrendingRepos()
                 .doOnSubscribe(__ -> viewModel.loadingUpdated().accept(true))
                 .doOnEvent((d, t) -> viewModel.loadingUpdated().accept(false)) //success fail
                 // events.

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Single;
+import me.davidllorca.advancedandroid.model.Repo;
 import me.davidllorca.advancedandroid.test.TestUtils;
 
 /**
@@ -31,6 +32,11 @@ public class TestRepoService implements RepoService {
             return Single.just(response);
         }
         return Single.error(new IOException());
+    }
+
+    @Override
+    public Single<Repo> getRepo(String repoOwner, String repoName) {
+        return null;
     }
 
     public void setSendError(boolean sendError) {

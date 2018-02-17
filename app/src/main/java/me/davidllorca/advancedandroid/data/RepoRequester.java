@@ -27,4 +27,9 @@ public class RepoRequester {
                 .subscribeOn(Schedulers.io());
     }
 
+    public Single<Repo> getRepos(String repoOwner, String repoName) {
+        return service.getRepo(repoOwner, repoName)
+                .subscribeOn(Schedulers.io());
+    }
+
 }
