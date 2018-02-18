@@ -27,6 +27,10 @@ abstract class ContributorState {
     @Nullable
     abstract Integer errorRes();
 
+    boolean isSuccess() {
+        return errorRes() == null;
+    }
+
     @AutoValue.Builder
     abstract static class Builder {
 

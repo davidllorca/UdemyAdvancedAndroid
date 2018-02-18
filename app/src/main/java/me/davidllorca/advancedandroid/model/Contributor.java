@@ -18,6 +18,8 @@ public abstract class Contributor {
 
     public abstract long id();
 
+    public abstract String login();
+
     @Json(name = "avatar_url")
     public abstract String avatarUrl();
 
