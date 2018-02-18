@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
+import me.davidllorca.advancedandroid.model.Contributor;
 import me.davidllorca.advancedandroid.model.Repo;
 
 /**
@@ -21,15 +21,17 @@ public class RepoRequester {
         this.service = service;
     }
 
-    public Single<List<Repo>> getTrendingRepos() {
+    Single<List<Repo>> getTrendingRepos() {
         return service.getTrendingRepos()
-                .map(TrendingReposResponse::repos)
-                .subscribeOn(Schedulers.io());
+                .map(TrendingReposResponse::repos);
     }
 
-    public Single<Repo> getRepos(String repoOwner, String repoName) {
-        return service.getRepo(repoOwner, repoName)
-                .subscribeOn(Schedulers.io());
+    Single<Repo> getRepos(String repoOwner, String repoName) {
+        return service.getRepo(repoOwner, repoName);
+    }
+
+    Single<List<Contributor>> getContributors(String url) {
+        return service.getContributors(url);
     }
 
 }
