@@ -16,6 +16,7 @@ import me.davidllorca.advancedandroid.data.RepoRepository;
 import me.davidllorca.advancedandroid.data.TrendingReposResponse;
 import me.davidllorca.advancedandroid.model.Repo;
 import me.davidllorca.advancedandroid.testutils.TestUtils;
+import me.davidllorca.advancedandroid.ui.ScreenNavigator;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -37,6 +38,8 @@ public class TrendingReposPresenterTest {
     Consumer<List<Repo>> onSuccessConsumer;
     @Mock
     Consumer<Boolean> loadingConsumer;
+    @Mock
+    ScreenNavigator screenNavigator;
 
     private TrendingReposPresenter presenter;
 
@@ -98,6 +101,17 @@ public class TrendingReposPresenterTest {
         return repos;
     }
 
+    @Test
+    public void onRepoClicked() throws Exception {
+        Repo repo = TestUtils.loadJson("mock/get_repo.json", Repo.class);
+        setUpSuccess();
+        initializePresenter();
+
+        presenter.onRepoClicked(repo);
+
+        verify(screenNavigator).goToRepoDetails(repo.owner().login(), repo.name());
+    }
+
     private Throwable setUpError() {
         Throwable error = new IOException();
         when(repoRepository.getTrendingRepos()).thenReturn(Single.error(error));
@@ -106,7 +120,7 @@ public class TrendingReposPresenterTest {
     }
 
     private void initializePresenter() {
-        presenter = new TrendingReposPresenter(viewModel, repoRepository);
+        presenter = new TrendingReposPresenter(viewModel, repoRepository, screenNavigator);
     }
 
 }

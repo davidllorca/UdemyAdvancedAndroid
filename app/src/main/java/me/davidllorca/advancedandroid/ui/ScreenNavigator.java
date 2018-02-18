@@ -13,6 +13,8 @@ public interface ScreenNavigator {
 
     boolean pop();
 
+    void goToRepoDetails(String repoOwner, String repoName);
+
     void clear();
 
 }

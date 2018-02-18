@@ -3,9 +3,11 @@ package me.davidllorca.advancedandroid.ui;
 import com.bluelinelabs.conductor.Controller;
 import com.bluelinelabs.conductor.Router;
 import com.bluelinelabs.conductor.RouterTransaction;
+import com.bluelinelabs.conductor.changehandler.FadeChangeHandler;
 
 import javax.inject.Inject;
 
+import me.davidllorca.advancedandroid.details.RepoDetailsController;
 import me.davidllorca.advancedandroid.di.ActivityScope;
 
 /**
@@ -39,6 +41,16 @@ public class DefaultScreenNavigator implements ScreenNavigator {
         // This will return true if the router handled the back request. Could be false if back
         // stack only has one item.
         return router != null && router.handleBack();
+    }
+
+    @Override
+    public void goToRepoDetails(String repoOwner, String repoName) {
+        if (router != null) {
+            router.pushController(RouterTransaction.with(RepoDetailsController.newInstance
+                    (repoName, repoOwner))
+                    .pushChangeHandler(new FadeChangeHandler())
+                    .popChangeHandler(new FadeChangeHandler()));
+        }
     }
 
     @Override
