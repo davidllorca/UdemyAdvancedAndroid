@@ -3,10 +3,12 @@ package me.davidllorca.advancedandroid.base;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import me.davidllorca.advancedandroid.data.RepoRepository;
+import me.davidllorca.advancedandroid.data.TestRepoService;
 import me.davidllorca.advancedandroid.data.TestRepoServiceModule;
 import me.davidllorca.advancedandroid.networking.ServiceModule;
-import me.davidllorca.advancedandroid.trending.TrendingReposControllerTest;
-import me.davidllorca.advancedandroid.ui.NavigationModule;
+import me.davidllorca.advancedandroid.ui.TestNavigationModule;
+import me.davidllorca.advancedandroid.ui.TestScreenNavigator;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 12/02/18.
@@ -18,10 +20,15 @@ import me.davidllorca.advancedandroid.ui.NavigationModule;
         TestActivityBindingModule.class,
         TestRepoServiceModule.class,
         ServiceModule.class,
-        NavigationModule.class, // In /main makes sense have this module one level down(with
-        // Activities level dependency)
+        TestNavigationModule.class
 })
 public interface TestApplicationComponent extends ApplicationComponent {
 
-    void inject(TrendingReposControllerTest trendingReposControllerTest);
+    TestScreenNavigator screenNavigator();
+
+    TestRepoService repoService();
+
+    RepoRepository repoRepository();
+
 }
+

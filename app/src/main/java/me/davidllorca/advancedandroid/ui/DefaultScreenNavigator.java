@@ -8,13 +8,11 @@ import com.bluelinelabs.conductor.changehandler.FadeChangeHandler;
 import javax.inject.Inject;
 
 import me.davidllorca.advancedandroid.details.RepoDetailsController;
-import me.davidllorca.advancedandroid.di.ActivityScope;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 10/02/18.
  */
 
-@ActivityScope
 public class DefaultScreenNavigator implements ScreenNavigator {
 
     private Router router;

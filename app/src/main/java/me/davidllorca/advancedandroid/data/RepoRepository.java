@@ -107,4 +107,8 @@ public class RepoRepository {
                 }).toMaybe();
     }
 
+    public void clearCache() {
+        cachedTrendingRepos.clear();
+        cachedContributors.clear();
+    }
 }

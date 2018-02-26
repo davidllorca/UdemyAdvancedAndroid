@@ -1,19 +1,15 @@
 package me.davidllorca.advancedandroid.trending;
 
 import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.Before;
-import org.junit.Rule;
+import com.bluelinelabs.conductor.Controller;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
-
-import me.davidllorca.advancedandroid.base.TestApplication;
 import me.davidllorca.advancedandroid.data.TestRepoService;
-import me.davidllorca.advancedandroid.home.MainActivity;
+import me.davidllorca.advancedandroid.test.ControllerTest;
 import me.davidllorca.udemyadvancedandroid.R;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -28,23 +24,24 @@ import static org.hamcrest.Matchers.allOf;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class TrendingReposControllerTest {
+public class TrendingReposControllerTest extends ControllerTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity
-            .class, true, false);
-    @Inject
-    TestRepoService repoService;
+    // Don't need this because we extend from ControllerTest
+//    @Rule
+//    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity
+//            .class, true, false);
+//    @Inject
+//    TestRepoService repoService;
 
-    @Before
-    public void setUp() {
-        TestApplication.getComponent().inject(this);
-    }
+//    @Before
+//    public void setUp() {
+//        TestApplication.getComponent().inject(this);
+//    }
 
     @Test
     public void loadRepos() {
-        repoService.setSendError(false);
-        activityTestRule.launchActivity(null);
+        repoService.clearErrorFlags();
+        launch();
 
         onView(withId(R.id.loading_indicator)).check(matches(withEffectiveVisibility(ViewMatchers
                 .Visibility.GONE)));
@@ -59,8 +56,8 @@ public class TrendingReposControllerTest {
 
     @Test
     public void loadReposError() {
-        repoService.setSendError(true);
-        activityTestRule.launchActivity(null);
+        repoService.setErrorFlags(TestRepoService.FLAG_TRENDING_REPOS);
+        launch();
 
         onView(withId(R.id.loading_indicator)).check(matches(withEffectiveVisibility(ViewMatchers
                 .Visibility.GONE)));
@@ -73,4 +70,8 @@ public class TrendingReposControllerTest {
 
     }
 
+    @Override
+    protected Controller controllerToLaunch() {
+        return new TrendingReposController();
+    }
 }

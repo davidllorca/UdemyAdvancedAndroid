@@ -12,8 +12,6 @@ public class TestApplication extends MyApplication {
         return (TestApplicationComponent)
                 ((TestApplication) InstrumentationRegistry.getTargetContext()
                         .getApplicationContext()).component;
-
-
     }
 
     @Override
@@ -22,4 +20,5 @@ public class TestApplication extends MyApplication {
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
+
 }
