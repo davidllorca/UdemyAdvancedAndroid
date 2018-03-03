@@ -7,6 +7,7 @@ import me.davidllorca.advancedandroid.data.RepoRepository;
 import me.davidllorca.advancedandroid.data.TestRepoService;
 import me.davidllorca.advancedandroid.data.TestRepoServiceModule;
 import me.davidllorca.advancedandroid.networking.ServiceModule;
+import me.davidllorca.advancedandroid.ui.TestActivityViewInterceptorModule;
 import me.davidllorca.advancedandroid.ui.TestNavigationModule;
 import me.davidllorca.advancedandroid.ui.TestScreenNavigator;
 
@@ -20,7 +21,8 @@ import me.davidllorca.advancedandroid.ui.TestScreenNavigator;
         TestActivityBindingModule.class,
         TestRepoServiceModule.class,
         ServiceModule.class,
-        TestNavigationModule.class
+        TestNavigationModule.class,
+        TestActivityViewInterceptorModule.class
 })
 public interface TestApplicationComponent extends ApplicationComponent {
 

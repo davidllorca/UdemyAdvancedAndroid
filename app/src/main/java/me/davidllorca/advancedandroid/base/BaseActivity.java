@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import me.davidllorca.advancedandroid.di.Injector;
 import me.davidllorca.advancedandroid.di.ScreenInjector;
+import me.davidllorca.advancedandroid.ui.ActivityViewInterceptor;
 import me.davidllorca.advancedandroid.ui.ScreenNavigator;
 import me.davidllorca.udemyadvancedandroid.R;
 
@@ -33,6 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Inject ScreenInjector screenInjector;
     @Inject
     ScreenNavigator screenNavigator;
+    @Inject
+    ActivityViewInterceptor activityViewInterceptor;
 
     private String instanceId;
     private Router router; // Analog of FragmentManager
@@ -46,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         Injector.inject(this);
 
-        setContentView(layoutRes());
+        activityViewInterceptor.setContentView(this, layoutRes());
         ViewGroup screenContainer = findViewById(R.id.screen_container);
         if(screenContainer == null){
             throw new NullPointerException("Activity must have a view with id: screen_container");
@@ -89,6 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if(isFinishing()){
             Injector.clearComponent(this);
         }
+        activityViewInterceptor.clear();
     }
 
     public ScreenInjector getScreenInjector() {
