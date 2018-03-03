@@ -12,13 +12,16 @@ import com.bluelinelabs.conductor.Controller;
 import com.bluelinelabs.conductor.ControllerChangeHandler;
 import com.bluelinelabs.conductor.Router;
 
+import java.util.Set;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
 import me.davidllorca.advancedandroid.di.Injector;
 import me.davidllorca.advancedandroid.di.ScreenInjector;
+import me.davidllorca.advancedandroid.lifecycle.ActivityLifecycleTask;
 import me.davidllorca.advancedandroid.ui.ActivityViewInterceptor;
+import me.davidllorca.advancedandroid.ui.RouterProvider;
 import me.davidllorca.advancedandroid.ui.ScreenNavigator;
 import me.davidllorca.udemyadvancedandroid.R;
 
@@ -26,7 +29,7 @@ import me.davidllorca.udemyadvancedandroid.R;
  * Created by David Llorca <davidllorcabaron@gmail.com> on 2/02/18.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements RouterProvider {
 
     // Retain component across configuration changes
     private static final String INSTANCE_ID_KEY = "instance_id";
@@ -36,6 +39,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     ScreenNavigator screenNavigator;
     @Inject
     ActivityViewInterceptor activityViewInterceptor;
+    @Inject
+    Set<ActivityLifecycleTask> activityLifecycleTasks;
 
     private String instanceId;
     private Router router; // Analog of FragmentManager
@@ -55,9 +60,48 @@ public abstract class BaseActivity extends AppCompatActivity {
             throw new NullPointerException("Activity must have a view with id: screen_container");
         }
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState);
-        screenNavigator.initWithRouter(router, initialScreen());
         monitorBackStack();
+        for (ActivityLifecycleTask task : activityLifecycleTasks) {
+            task.onCreate(this);
+        }
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        for (ActivityLifecycleTask task : activityLifecycleTasks) {
+            task.onStart(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for (ActivityLifecycleTask task : activityLifecycleTasks) {
+            task.onResume(this);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        for (ActivityLifecycleTask task : activityLifecycleTasks) {
+            task.onPause(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        for (ActivityLifecycleTask task : activityLifecycleTasks) {
+            task.onStope(this);
+        }
+    }
+
+    @Override
+    public Router getRouter() {
+        return router;
     }
 
     @LayoutRes
@@ -65,8 +109,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // Abstract method that provides the initial controller.
     // All subclasses will have to say what their route controller is.
-    protected abstract Controller initialScreen();
-
+    public abstract Controller initialScreen();
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -88,11 +131,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        screenNavigator.clear();
         if(isFinishing()){
             Injector.clearComponent(this);
         }
         activityViewInterceptor.clear();
+        for (ActivityLifecycleTask task : activityLifecycleTasks) {
+            task.onDestroy(this);
+        }
     }
 
     public ScreenInjector getScreenInjector() {

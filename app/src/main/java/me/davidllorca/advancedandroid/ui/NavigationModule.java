@@ -2,7 +2,8 @@ package me.davidllorca.advancedandroid.ui;
 
 import dagger.Binds;
 import dagger.Module;
-import me.davidllorca.advancedandroid.di.ActivityScope;
+import dagger.multibindings.IntoSet;
+import me.davidllorca.advancedandroid.lifecycle.ActivityLifecycleTask;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 10/02/18.
@@ -13,6 +14,10 @@ public abstract class NavigationModule {
 
     // When a object injects ScreenNavigator they will be given a DefaultScreenNavigator.
     @Binds
-    @ActivityScope // Try yo avoid this. It's just to use ScreenNavigator in our test
     abstract ScreenNavigator provideScreenNavigator(DefaultScreenNavigator screenNavigator);
+
+    @Binds
+    @IntoSet
+    abstract ActivityLifecycleTask bindScreenNavigatorTask(DefaultScreenNavigator screenNavigator);
+
 }

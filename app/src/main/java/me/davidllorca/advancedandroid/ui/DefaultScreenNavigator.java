@@ -1,5 +1,7 @@
 package me.davidllorca.advancedandroid.ui;
 
+import android.support.v7.app.AppCompatActivity;
+
 import com.bluelinelabs.conductor.Controller;
 import com.bluelinelabs.conductor.Router;
 import com.bluelinelabs.conductor.RouterTransaction;
@@ -8,12 +10,15 @@ import com.bluelinelabs.conductor.changehandler.FadeChangeHandler;
 import javax.inject.Inject;
 
 import me.davidllorca.advancedandroid.details.RepoDetailsController;
+import me.davidllorca.advancedandroid.di.ActivityScope;
+import me.davidllorca.advancedandroid.lifecycle.ActivityLifecycleTask;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 10/02/18.
  */
 
-public class DefaultScreenNavigator implements ScreenNavigator {
+@ActivityScope
+public class DefaultScreenNavigator extends ActivityLifecycleTask implements ScreenNavigator {
 
     private Router router;
 
@@ -23,6 +28,14 @@ public class DefaultScreenNavigator implements ScreenNavigator {
     }
 
     @Override
+    public void onCreate(AppCompatActivity activity) {
+        if (!(activity instanceof RouterProvider)) {
+            throw new IllegalArgumentException("Activity must be instance of RouterProvider");
+        }
+        initWithRouter(((RouterProvider) activity).getRouter(), ((RouterProvider) activity)
+                .initialScreen());
+    }
+
     public void initWithRouter(Router router, Controller rootScreen) {
         this.router = router;
         // The router gets information from saved instance state, so it knows if it needs to
@@ -52,7 +65,8 @@ public class DefaultScreenNavigator implements ScreenNavigator {
     }
 
     @Override
-    public void clear() {
+    public void onDestroy(AppCompatActivity activity) {
         router = null;
     }
+
 }

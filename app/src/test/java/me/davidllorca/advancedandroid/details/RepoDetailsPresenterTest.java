@@ -5,6 +5,7 @@ import com.squareup.moshi.Types;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.List;
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 import me.davidllorca.advancedandroid.data.RepoRepository;
+import me.davidllorca.advancedandroid.lifecycle.DisposableManager;
 import me.davidllorca.advancedandroid.model.Contributor;
 import me.davidllorca.advancedandroid.model.Repo;
 import me.davidllorca.advancedandroid.testutils.TestUtils;
@@ -96,7 +98,8 @@ public class RepoDetailsPresenterTest {
     }
 
     private void initPresenter() {
-        new RepoDetailsPresenter(OWNER, NAME, repoRepository, viewModel);
+        new RepoDetailsPresenter(OWNER, NAME, repoRepository, viewModel, Mockito.mock
+                (DisposableManager.class));
     }
 
 }

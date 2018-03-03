@@ -29,6 +29,14 @@ public class ScreenInjector {
         this.screenInjectors = screenInjectors;
     }
 
+    // ScreenInjector will need a Activity
+    static ScreenInjector get(Activity activity) {
+        if (!(activity instanceof BaseActivity)) {
+            throw new IllegalArgumentException("Controller must be hosted by BaseActivity");
+        }
+        return ((BaseActivity) activity).getScreenInjector();
+    }
+
     void inject(Controller controller){
         if(!(controller instanceof BaseController)) {
             throw new IllegalArgumentException("Controller must extend BaseController");
@@ -48,15 +56,10 @@ public class ScreenInjector {
     }
 
     void clear(Controller controller) {
-        cache.remove(controller.getInstanceId());
-    }
-
-    // ScreenInjector will need a Activity
-    static ScreenInjector get(Activity activity) {
-        if(!(activity instanceof BaseActivity)){
-            throw new IllegalArgumentException("Controller must be hosted by BaseActivity");
+        AndroidInjector<?> injector = cache.remove(controller.getInstanceId());
+        if (injector instanceof ScreenComponent) {
+            ((ScreenComponent) injector).disposableManager().dispose();
         }
-        return ((BaseActivity) activity).getScreenInjector();
     }
 
 }

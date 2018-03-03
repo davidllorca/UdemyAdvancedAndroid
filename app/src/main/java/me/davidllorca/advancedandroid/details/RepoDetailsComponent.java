@@ -5,6 +5,8 @@ import javax.inject.Named;
 import dagger.BindsInstance;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
+import me.davidllorca.advancedandroid.base.ScreenModule;
+import me.davidllorca.advancedandroid.di.ScreenComponent;
 import me.davidllorca.advancedandroid.di.ScreenScope;
 
 /**
@@ -12,8 +14,11 @@ import me.davidllorca.advancedandroid.di.ScreenScope;
  */
 
 @ScreenScope
-@Subcomponent
-public interface RepoDetailsComponent extends AndroidInjector<RepoDetailsController> {
+@Subcomponent(modules = {
+        ScreenModule.class,
+        RepoDetailsScreenModule.class
+})
+public interface RepoDetailsComponent extends ScreenComponent<RepoDetailsController> {
 
     @Subcomponent.Builder
     abstract class Builder extends AndroidInjector.Builder<RepoDetailsController> {

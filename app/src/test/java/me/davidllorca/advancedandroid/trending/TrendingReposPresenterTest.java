@@ -14,6 +14,7 @@ import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 import me.davidllorca.advancedandroid.data.RepoRepository;
 import me.davidllorca.advancedandroid.data.TrendingReposResponse;
+import me.davidllorca.advancedandroid.lifecycle.DisposableManager;
 import me.davidllorca.advancedandroid.model.Repo;
 import me.davidllorca.advancedandroid.testutils.TestUtils;
 import me.davidllorca.advancedandroid.ui.ScreenNavigator;
@@ -120,7 +121,8 @@ public class TrendingReposPresenterTest {
     }
 
     private void initializePresenter() {
-        presenter = new TrendingReposPresenter(viewModel, repoRepository, screenNavigator);
+        presenter = new TrendingReposPresenter(viewModel, repoRepository, screenNavigator,
+                Mockito.mock(DisposableManager.class));
     }
 
 }
