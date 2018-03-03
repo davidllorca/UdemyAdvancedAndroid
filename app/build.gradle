@@ -76,3 +76,18 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+def mockCopySpec = copySpec {
+    from rootProject.file('app/')
+    include 'mock/'
+}
+
+task copyMock(type: Copy) {
+    ['src/test/resources','src/androidTest/resources'].each {dest ->
+        copy {
+            with mockCopySpec
+            into dest
+        }
+    }
+}
+build.finalizedBy(copyMock)

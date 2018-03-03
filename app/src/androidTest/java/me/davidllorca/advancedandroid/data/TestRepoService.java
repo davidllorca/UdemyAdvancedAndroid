@@ -51,7 +51,7 @@ public class TestRepoService implements RepoService {
     @Override
     public Single<Repo> getRepo(String repoOwner, String repoName) {
         if ((errorFlags & FLAG_GET_REPO) == 0) {
-            Repo repo = testUtils.loadJson("mock/get_repo.json", Repo.class);
+            Repo repo = testUtils.loadJson("mock/repos/get_repo.json", Repo.class);
             if ((holdFlags & FLAG_GET_REPO) == FLAG_GET_REPO) {
                 return holdingSingle(repo, FLAG_GET_REPO);
             }
@@ -63,7 +63,8 @@ public class TestRepoService implements RepoService {
     @Override
     public Single<List<Contributor>> getContributors(String url) {
         if ((errorFlags & FLAG_GET_CONTRIBUTORS) == 0) {
-            List<Contributor> contributors = testUtils.loadJson("mock/get_contributors.json",
+            List<Contributor> contributors = testUtils.loadJson
+                    ("mock/repos/contributors/get_contributors.json",
                     Types.newParameterizedType(List.class, Contributor.class));
             if ((holdFlags & FLAG_GET_CONTRIBUTORS) == FLAG_GET_CONTRIBUTORS) {
                 return holdingSingle(contributors, FLAG_GET_CONTRIBUTORS);
