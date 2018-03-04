@@ -11,6 +11,8 @@ import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import me.davidllorca.advancedandroid.base.BaseController;
+import me.davidllorca.poweradapter.adapter.RecyclerAdapter;
+import me.davidllorca.poweradapter.adapter.RecyclerDataSource;
 import me.davidllorca.udemyadvancedandroid.R;
 
 import static android.view.View.GONE;
@@ -25,6 +27,9 @@ public class TrendingReposController extends BaseController {
     TrendingReposPresenter presenter;
     @Inject
     TrendingReposViewModel viewModel;
+    @Inject
+    RecyclerDataSource dataSource;
+
 
     @BindView(R.id.repo_list)
     RecyclerView repoList;
@@ -36,7 +41,7 @@ public class TrendingReposController extends BaseController {
     @Override
     protected void onViewBound(View view) {
         repoList.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        repoList.setAdapter(new RepoAdapter(presenter));
+        repoList.setAdapter(new RecyclerAdapter(dataSource));
     }
 
     @Override
@@ -49,9 +54,6 @@ public class TrendingReposController extends BaseController {
                     repoList.setVisibility(loading ? GONE : View.VISIBLE);
                     errorText.setVisibility(loading ? GONE : errorText.getVisibility());
                 }),
-                viewModel.repos()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(((RepoAdapter) repoList.getAdapter())::setData),
                 viewModel.error()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(errorRes -> {

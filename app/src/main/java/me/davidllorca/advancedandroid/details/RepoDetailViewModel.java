@@ -4,14 +4,11 @@ import com.jakewharton.rxrelay2.BehaviorRelay;
 
 import org.threeten.bp.format.DateTimeFormatter;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import me.davidllorca.advancedandroid.di.ScreenScope;
-import me.davidllorca.advancedandroid.model.Contributor;
 import me.davidllorca.advancedandroid.model.Repo;
 import me.davidllorca.udemyadvancedandroid.R;
 import timber.log.Timber;
@@ -56,11 +53,10 @@ public class RepoDetailViewModel {
                 );
     }
 
-    Consumer<List<Contributor>> processContributors() {
-        return contributors -> contributorStateRelay.accept(
+    Consumer<Object> contributorsLoaded() {
+        return __ -> contributorStateRelay.accept(
                 ContributorState.builder()
                         .loading(false)
-                        .contributors(contributors)
                         .build());
     }
 

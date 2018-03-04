@@ -4,10 +4,6 @@ import android.support.annotation.Nullable;
 
 import com.google.auto.value.AutoValue;
 
-import java.util.List;
-
-import me.davidllorca.advancedandroid.model.Contributor;
-
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 17/02/18.
  */
@@ -22,9 +18,6 @@ abstract class ContributorState {
     abstract boolean loading();
 
     @Nullable
-    abstract List<Contributor> contributors();
-
-    @Nullable
     abstract Integer errorRes();
 
     boolean isSuccess() {
@@ -35,8 +28,6 @@ abstract class ContributorState {
     abstract static class Builder {
 
         abstract Builder loading(boolean loading);
-
-        abstract Builder contributors(List<Contributor> contributors);
 
         abstract Builder errorRes(Integer errorRes);
 

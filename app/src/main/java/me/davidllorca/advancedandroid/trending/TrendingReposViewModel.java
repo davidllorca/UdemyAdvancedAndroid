@@ -2,14 +2,12 @@ package me.davidllorca.advancedandroid.trending;
 
 import com.jakewharton.rxrelay2.BehaviorRelay;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import me.davidllorca.advancedandroid.di.ScreenScope;
-import me.davidllorca.advancedandroid.model.Repo;
 import me.davidllorca.udemyadvancedandroid.R;
 import timber.log.Timber;
 
@@ -23,7 +21,6 @@ import timber.log.Timber;
 class TrendingReposViewModel {
 
     // Relays are Observables and also Consumers.
-    private final BehaviorRelay<List<Repo>> reposRelay = BehaviorRelay.create();
     private final BehaviorRelay<Integer> errorRelay = BehaviorRelay.create();
     private final BehaviorRelay<Boolean> loadingRelay = BehaviorRelay.create();
 
@@ -36,10 +33,6 @@ class TrendingReposViewModel {
         return loadingRelay;
     }
 
-    Observable<List<Repo>> repos() {
-        return reposRelay;
-    }
-
     Observable<Integer> error() {
         return errorRelay;
     }
@@ -48,9 +41,8 @@ class TrendingReposViewModel {
         return loadingRelay;
     }
 
-    Consumer<List<Repo>> reposUpdated() {
-        errorRelay.accept(-1);
-        return reposRelay;
+    Action reposUpdated() {
+        return () -> errorRelay.accept(-1);
     }
 
     Consumer<Throwable> onError() {

@@ -4,11 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import io.reactivex.observers.TestObserver;
-import me.davidllorca.advancedandroid.data.TrendingReposResponse;
-import me.davidllorca.advancedandroid.testutils.TestUtils;
 import me.davidllorca.udemyadvancedandroid.R;
 
 /**
@@ -34,20 +31,10 @@ public class TrendingReposViewModelTest {
     }
 
     @Test
-    public void repos() throws Exception {
-        TrendingReposResponse response = TestUtils.loadJson("mock/search/get_trending_repos.json",
-                TrendingReposResponse.class);
-        viewModel.reposUpdated().accept(response.repos());
-
-        //noinspection unchecked
-        viewModel.repos().test().assertValues(response.repos());
-    }
-
-    @Test
     public void error() throws Exception {
         TestObserver<Integer> errorObserver = viewModel.error().test();
         viewModel.onError().accept(new IOException());
-        viewModel.reposUpdated().accept(Collections.emptyList());
+        viewModel.reposUpdated().run();
 
         errorObserver.assertValues(R.string.api_error_repos, -1);
     }

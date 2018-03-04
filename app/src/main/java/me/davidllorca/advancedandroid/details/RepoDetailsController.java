@@ -14,6 +14,8 @@ import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import me.davidllorca.advancedandroid.base.BaseController;
+import me.davidllorca.poweradapter.adapter.RecyclerAdapter;
+import me.davidllorca.poweradapter.adapter.RecyclerDataSource;
 import me.davidllorca.udemyadvancedandroid.R;
 
 /**
@@ -28,6 +30,9 @@ public class RepoDetailsController extends BaseController {
     RepoDetailViewModel viewModel;
     @Inject
     RepoDetailsPresenter presenter;
+    @Inject
+    RecyclerDataSource dataSource;
+
     @BindView(R.id.tv_repo_name)
     TextView repoNameText;
     @BindView(R.id.tv_repo_description)
@@ -62,7 +67,7 @@ public class RepoDetailsController extends BaseController {
     @Override
     protected void onViewBound(View view) {
         contributorList.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        contributorList.setAdapter(new ContributorAdapter());
+        contributorList.setAdapter(new RecyclerAdapter(dataSource));
     }
 
     @Override
@@ -110,8 +115,6 @@ public class RepoDetailsController extends BaseController {
                                 .GONE : View.VISIBLE);
                         if (contributorState.isSuccess()) {
                             contributorsErrorText.setText(null);
-                            ((ContributorAdapter) contributorList.getAdapter()).setData
-                                    (contributorState.contributors());
                         } else {
                             //noinspection ConstantConditions
                             contributorsErrorText.setText(contributorState.errorRes());

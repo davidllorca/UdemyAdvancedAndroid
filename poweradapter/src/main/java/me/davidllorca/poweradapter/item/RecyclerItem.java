@@ -8,6 +8,6 @@ public interface RecyclerItem {
 
     long getId();
 
-    String redenrKey();
+    String renderKey();
 
 }

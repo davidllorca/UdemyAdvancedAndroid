@@ -2,6 +2,7 @@ package me.davidllorca.poweradapter.adapter;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 
@@ -53,7 +54,7 @@ public class RecyclerDataSource {
 
     @LayoutRes
     int viewResourceForPosition(int position) {
-        return renderers.get(data.get(position).redenrKey()).layoutRes();
+        return renderers.get(data.get(position).renderKey()).layoutRes();
     }
 
     int getCount() {
@@ -66,5 +67,15 @@ public class RecyclerDataSource {
 
     void attachToAdapter(RecyclerView.Adapter adapter) {
         adapterReference = new WeakReference<>(adapter);
+    }
+
+    /**
+     * Allows us to set data without invoking DiffUtil which would throw an exception during unit
+     * testing.
+     */
+    @VisibleForTesting
+    void seedData(List<RecyclerItem> data) {
+        this.data.clear();
+        this.data.addAll(data);
     }
 }
